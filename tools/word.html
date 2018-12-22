@@ -1,0 +1,171 @@
+﻿<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+<meta name="applicable-device" content="pc,mobile">
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="//q.wncx.cn/m/zishu/icon_57.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="//q.wncx.cn/m/zishu/icon_72.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="//q.wncx.cn/m/zishu/icon_114.png">
+<meta name="format-detection" content="telephone=no">
+<title>字数检查统计 - 虚无团队</title>
+<meta name="keywords" content="字数统计,字数,字数统计器,在线字数统计,字数统计工具,字数计算器,查字数,测字数络,虚无团队">
+<meta name="Description" content="字数统计是字数统计器,在线字数统计,word怎么看字数,字数在线统计,字数计算器">
+<script src="https://zz.bdstatic.com/linksubmit/push.js"></script><script>cache_sjs="17061001";sj_jie_mian="1";</script>
+<link href="//q.wncx.cn/img/css/style.css?v=17061001" rel="stylesheet" type="text/css">
+<script src="//q.wncx.cn/img/js/js.js?v=17061001"></script>
+<script src="//q.wncx.cn/g/data/data.js?v=17061001"></script>
+<script>all_zhi_xing_js_head();</script><link href="//q.wncx.cn/img/css/1040.css?v=17061001" rel="stylesheet" type="text/css"><link href="//q.wncx.cn/img/css/sj.css?v=17061001" rel="stylesheet" type="text/css" media="screen and (max-width:800px)"> 
+<script type="text/javascript"> 
+//<![CDATA[
+var BROWSER = {};
+__GetBVar();
+if (BROWSER.safari) { BROWSER.firefox = true; }
+
+function __GetBVar() {
+    var types = { 'ie': 'msie', 'firefox': '', 'chrome': '', 'opera': '', 'safari': '', 'mozilla': '', 'webkit': '', 'maxthon': '', 'qq': 'qqbrowser' };
+    var __ua = navigator.userAgent.toLowerCase();
+    var other = 1, ver = 0;
+	if(BROWSER.opera){
+		ver = opera.version();
+		BROWSER.opera = ver;
+		BROWSER.name = "opera";
+		BROWSER.ver = parseFloat(ver);
+	}
+	else{
+		BROWSER.opera = 0;
+	}
+    for (i in types) {
+        var v = types[i] ? types[i] : i;
+        if (__ua.indexOf(v) != -1) {
+            var re = new RegExp(v + '(\\/|\\s)([\\d\\.]+)', 'ig');
+            var matches = re.exec(__ua);
+            ver = matches != null ? matches[2] : 0;
+            other = ver !== 0 && v != 'mozilla' ? 0 : other;
+			if(!BROWSER.name){
+				BROWSER.name = i;
+				BROWSER.ver = parseFloat(ver);
+			}
+        }
+        else {
+            ver = 0;
+        }
+        eval('BROWSER.' + i + '= ver');
+    }
+    BROWSER.other = other;
+}
+
+function $(name){ return document.getElementById(name); }
+function $set(name, val){ document.getElementById(name).innerHTML = val; }
+
+function Statistics(){
+	var str = $('id_content').value.replace(/\r\n/g, "\n");
+	var t_str = str.replace(/\n/g, '');
+	var w_c_str = str.match(/[\u4e00-\u9fa5]/g)||[];
+	var w_e_str = str.match(/\b\w+\b/g)||[];
+	var w_n_str = str.match(/\b\d+\b/g)||[];
+	var e_p = t_str.match(/[|\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g)||[];
+	
+	var sTotal = 0;
+	for(var i = 0; i < t_str.length; i++){
+		var c = t_str.charAt(i);
+		if (c.match(/[^\x00-\xff]/))sTotal ++;
+	}
+	
+	var e = t_str.match(/[A-Za-z]/g)||[];
+	var eTotal = e.length;
+
+	var n = t_str.match(/[0-9]/g)||[];
+	var nTotal = n.length;
+
+	var part = 0;
+	var s_ma = str.split("\n");
+	for(var i = 0; i < s_ma.length; i++){
+		if(s_ma[i].length > 0) part++;
+	}
+
+	$set('id_total', t_str.length);
+	$set('id_c_total', w_c_str.length);
+	$set('id_c_punctuation', sTotal - w_c_str.length);
+	$set('id_e_total', eTotal);
+	$set('id_e_punctuation', e_p.length);
+	$set('id_e_words', w_e_str.length - w_n_str.length);
+	$set('id_n_words', w_n_str.length);
+	$set('id_n_total', nTotal);
+	$set('id_part', part);
+}
+function Clear_Content(){
+	$('id_content').value = "";
+
+	Statistics();
+}
+function R_Trim(){
+	var str = $('id_content').value.replace(/\r\n/g, "\n").replace(/\n/g, "~");
+	var m = str.split("~");
+	var ma = [];
+	var len = m.length;
+	for(var i = 0; i < len; i ++){
+		ma.push(m[i].replace(/(\s*$)/g, ""));
+	}
+	$('id_content').value = ma.join("\r\n");
+	
+	Statistics();
+}
+function Section(){
+	var str = $('id_content').value.replace(/\r\n/g, "\n").replace(/\n/g, "~");
+	var m = str.split("~");
+	var ma = [];
+	var len = m.length;
+	for(var i = 0; i < len; i ++){
+		ma.push('    ' + m[i].replace(/(^\s*)|(\s*$)/g, ""));
+	}
+	$('id_content').value = ma.join("\r\n");
+
+	Statistics();
+}
+//]]>
+</script> 
+</head>
+
+<body>
+<div id="main">
+<div id="main_left">
+<div class="kuang" style="margin-bottom: 8px;">
+<div id="main_content"> 
+<table width="98%" border="0" align="center" cellpadding="5" cellspacing="0">
+<tbody><tr>
+<div width="100px";><strong>请输入将要被检查的内容：</strong></div>
+<p></p>
+<div width="100px";><textarea id="id_content" style="border: 100% solid #d9d9d9;height: 150px;width: 100%;"></textarea></div>
+<script type="text/javascript"> 
+//<![CDATA[
+if(BROWSER.ie) $('id_content').onpropertychange = Statistics;
+else $('id_content').oninput = Statistics;
+//]]>
+</script> 
+</tr>
+</tbody></table>
+<div class="xiaoshuomingkuang_neirong">
+<p><strong>统计结果</strong></p>
+字符总数：&nbsp;<span id="id_total">0</span>&nbsp;个
+<br><strong>中文字符</strong>：&nbsp;<span id="id_c_total">0</span>&nbsp;个<br>
+    <strong>中文标点</strong>：&nbsp;<span id="id_c_punctuation">0</span>&nbsp;个<br>
+    <strong>英文字符</strong>：&nbsp;<span id="id_e_total">0</span>&nbsp;个<br>
+    <strong>英文标点</strong>：&nbsp;<span id="id_e_punctuation">0</span>&nbsp;个<br>
+    <strong>数字字符</strong>：&nbsp;<span id="id_n_total">0</span>&nbsp;个 
+   <div class="blankline"></div>
+
+ <p><input onclick="Clear_Content()" type="button" value="清空数据" title="清空编辑框"> <input onclick="R_Trim()" type="button" value="清除首尾空格" title="清除首尾空格"><input onclick="Section()" type="button" value="自动排版" title="自动排版（段前加空格）"></p> </div>
+
+<h2 class="xiaoshuomingkuang_biaoti">关于本工具</h2>
+<div class="xiaoshuomingkuang_neirong">字数统计是 虚无团队 提供的一项为打字员检查是否有问题的工具，该功能可以检查打字内容是否有英文字符，也能为打好的内容自动排版，省去了检查的烦恼。<br>
+<a href="https://voidteam.ml">回到主页</a>
+ 
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
